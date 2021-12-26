@@ -1,0 +1,56 @@
+def lukukirja():
+
+    sanakirja = {0 : "nolla", 1 : "yksi", 2 : "kaksi", 3 : "kolme", 4 : "neljä", 5 : "viisi", 6 : "kuusi", 7 : "seitsemän", 8 : "kahdeksan", 9 : "yhdeksän", 10 : "kymmenen"}
+    sanakirja2 = {}
+    luvut = 0
+    lukusana = ""
+
+    while luvut < 100:
+        if luvut < 11:
+            lukusana = sanakirja[luvut]
+            #          avain     arvo
+            sanakirja2[luvut] = lukusana
+            luvut+=1
+        
+        if luvut >= 11 and luvut < 20:
+            eluvut = (luvut-10)
+            lukusana = f"{sanakirja[eluvut]}toista"
+            #print(f"{sanakirja[eluvut]}toista")
+            sanakirja2[luvut] = lukusana
+            luvut+=1
+        
+        if luvut >= 20:
+            num = luvut
+            x = [int(a) for a in str(num)]
+            #print(x)
+            ekaluku = x[0]
+            tokaluku = x[1]
+            #print(f"{sanakirja[ekaluku]}kymmentä", end="")
+            lukusana = f"{sanakirja[ekaluku]}kymmentä"
+            if tokaluku > 0:
+                lukusana = f"{sanakirja[ekaluku]}kymmentä{sanakirja[tokaluku]}"
+                #print(sanakirja[tokaluku])
+            sanakirja2[luvut] = lukusana
+            luvut+=1
+        
+
+    return sanakirja2 
+
+    #x=0
+    #while x <= len(sanakirja)-1:
+    #    print(sanakirja[x])
+    #    x+=1
+
+    #if luvut in sanakirja:
+     #   return sanakirja[luvut]
+
+
+if __name__ == "__main__":
+    luvut = lukukirja()
+    print(luvut[2])
+    print(luvut[11])
+    print(luvut[45])
+    print(luvut[99])
+    print(luvut[0])
+    
+   
