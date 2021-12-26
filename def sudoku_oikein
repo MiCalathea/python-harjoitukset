@@ -1,0 +1,192 @@
+# tee ratkaisu tänne
+def sudoku_oikein(sudoku: list):
+
+    oikeinvaiei = []
+    
+    #rivi_oikein(sudoku, 0)
+    oikeinvaiei.append("rivi_oikein:")
+    if rivi_oikein(sudoku, 6):
+        oikeinvaiei.append(True)
+    else:
+        oikeinvaiei.append(False)
+    
+    oikeinvaiei.append("sarake_oikein:")
+    #sarake_oikein(sudoku, 0)
+    if sarake_oikein(sudoku, 7):
+        oikeinvaiei.append(True)
+    else:
+        oikeinvaiei.append(False)
+    
+
+    r=0
+    s=0
+    kierros = 0
+    oikeinvaiei.append("nelio_oikein:")
+    while kierros < 9:
+        while r <= 6:
+            while s <=6:
+                if nelio_oikein(sudoku, r, s):
+                    oikeinvaiei.append(True)
+                    s += 3
+                    kierros += 1
+                else:
+                    oikeinvaiei.append(False)
+                    s += 3
+                    kierros += 1
+                
+            r += 3
+            s = 0
+    
+
+    print(oikeinvaiei)
+    if False in oikeinvaiei:
+        return False
+    else:
+        return True
+
+#---------------------------------------------------
+
+def rivi_oikein(sudoku: list, rivi_nro: int):
+    rivinumerot = []
+    for luku in sudoku[rivi_nro]:
+        if luku <= 9 and luku > 0: #oli aiemmin luku >= 0 jolloin tarvittiin nollien poisto
+            rivinumerot.append(luku)
+    
+    print(f"rivi oikein {rivinumerot}")
+    rivinumerot.sort()
+
+    print(rivinumerot)
+
+# tarkistetaan, onko riveillä samoja numeroita:
+    x=0
+    tottavaiei = []
+    while x < len(rivinumerot)-1:
+        rivinumerot[x] != rivinumerot[x+1]
+        if (rivinumerot[x] == rivinumerot[x+1]):
+            tottavaiei.append(False)
+            x += 1
+
+        else:
+            tottavaiei.append(True)
+            x += 1
+        
+    print(f"rivioikein tottavaiei {tottavaiei}")
+    
+    if False in tottavaiei:
+        return False
+    else:
+        return True
+
+#---------------------------------------------------
+
+def sarake_oikein(sudoku: list, sarake_nro: int):
+
+#käy läpi matriisin sarakkeen
+#testaa, onko luvut väliltä 0-9 ja tallentaa ne sarakenumerot-listaan
+    rivi = 0
+    sarakenumerot = []
+    sijainti = sudoku[rivi][sarake_nro]
+
+    while rivi <= len(sudoku)-1:
+        sijainti = sudoku[rivi][sarake_nro]
+
+        if sijainti <= 9 and sijainti > 0:
+            sarakenumerot.append(sijainti)
+        rivi = rivi+1
+    
+    print(f"sarakenumerot oikein {sarakenumerot}")
+    sarakenumerot.sort()
+
+    #print(sarakenumerot)
+
+# tarkistetaan, onko riveillä samoja numeroita:
+    x=0
+    tottavaiei = []
+    while x < len(sarakenumerot)-1:
+        sarakenumerot[x] != sarakenumerot[x+1]
+        if (sarakenumerot[x] == sarakenumerot[x+1]):
+            tottavaiei.append(False)
+            x += 1
+
+        else:
+            tottavaiei.append(True)
+            x += 1
+    
+    if False in tottavaiei:
+        return False
+    else:
+        return True
+
+
+
+#---------------------------------------------------
+
+def nelio_oikein(sudoku: list, rivi_nro: int, sarake_nro: int):
+    #käy läpi matriisin rivin ja sarakkeen ja tallentaa luvut ruutu-listaan
+    #rivi = 0
+    ruutu = []
+    rivi = rivi_nro
+    sarake = sarake_nro
+    sijainti = sudoku[rivi_nro][sarake_nro]
+
+    while rivi <= (rivi_nro+2):
+
+        while sarake <= (sarake_nro+2):
+            sijainti = sudoku[rivi][sarake]
+            ruutu.append(sijainti)
+            sarake += 1
+
+        rivi += 1
+        sarake = sarake_nro
+    
+    print(f"ruutu {ruutu}")
+    ruutu.sort()
+
+#poistetaan nollat eli tyhjät rivinumeroista:
+    x=-1
+    while x < len(ruutu)-1:
+        if 0 in ruutu:
+            ruutu.remove(0)
+        x += 1
+
+    #print(ruutu)
+
+# tarkistetaan, onko riveillä samoja numeroita:
+    x=-1
+    tottavaiei = []
+    while x < len(ruutu)-1:
+        ruutu[x] != ruutu[x+1]
+        if (ruutu[x] == ruutu[x+1]):
+            tottavaiei.append(False)
+            x += 1
+
+        else:
+            tottavaiei.append(True)
+            x += 1
+    print(f"saraketarkistimen tottavaiei {tottavaiei}")
+
+    if False in tottavaiei:
+        return False
+    else:
+        return True
+
+
+#---------------------------------------------------
+
+if __name__ == "__main__":
+
+    sudoku = [
+    # 0  1  2  3  4  5  6  7  8
+    [ 6, 4, 9, 2, 8, 3, 1, 5, 7 ], #0
+    [ 6, 5, 0, 6, 4, 9, 2, 3, 8 ], #1
+    [ 2, 3, 8, 1, 5, 7, 6, 4, 9 ], #2
+    [ 9, 2, 3, 8, 1, 5, 0, 6, 4 ], #3
+    [ 7, 6, 4, 9, 2, 3, 8, 1, 5 ], #4
+    [ 8, 1, 5, 7, 0, 4, 9, 2, 0 ], #5
+    [ 5, 7, 6, 4, 9, 2, 3, 2, 1 ], #6
+    [ 4, 0, 2, 3, 8, 1, 5, 0, 6 ], #7
+    [ 3, 0, 1, 5, 0, 6, 4, 9, 0 ], #8
+    ]
+    sudoku_oikein(sudoku)
+    print(sudoku_oikein(sudoku))
+
