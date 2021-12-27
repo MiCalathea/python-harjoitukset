@@ -1,0 +1,44 @@
+#palauttaa sanakirjan, jossa avain on luku ja arvot kertomia
+
+import math
+
+def kertomat(n: int):
+  
+    dict = {} #sanakirja
+    #dict[luku] = tulo
+    
+    #kertoma[luku] = []
+    #while i > 0:
+     #   tulo = i*tulo
+      #  dict[luku] = tulo
+       # i -= 1
+    x=1
+
+    while x <= n:
+        fact = math.factorial(x)
+        dict[x] = fact
+        x+=1
+
+    print(dict)
+
+    
+    #for avain, arvo in dict.items():
+     #   print(f"{avain}: {arvo}")
+        #print("arvo:", arvo)
+
+    return dict
+
+
+if __name__ == "__main__":
+    k = kertomat(5)
+    print(k[1])
+    print(k[3])
+    print(k[5])
+
+
+    #malliratkaisu     
+    # tulos = {}
+    #     tulos[1] = 1
+    #     for i in range(2, n + 1):
+    #         tulos[i] = tulos[i-1] * i
+    #     return tulos
