@@ -1,4 +1,5 @@
-# tee ratkaisu tänne
+# tarkistaa, eli palauttaa True tai False sen mukaan, onko sudokun rivit, sarakkeet ja ruudukot täytetty oikein: jokaisessa vain 1 numero väliltä 1-9
+
 def sudoku_oikein(sudoku: list):
 
     oikeinvaiei = []
