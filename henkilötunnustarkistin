@@ -1,0 +1,115 @@
+import datetime
+
+def onko_validi(hetu: str):
+
+    pv = int(hetu[0:2]) #01
+    kk = int(hetu[2:4]) #01
+    v = int(hetu[4:6]) #18 19 20
+    merkki = hetu[6] #+ - A
+
+    syntymavuosi = vuosiluku(v, merkki)
+
+    tarkistuslista = []
+
+    if pituus(hetu):
+        tarkistuslista.append(True)
+    else:
+        tarkistuslista.append(False)
+    
+    if merkkitarkistin(merkki):
+        tarkistuslista.append(True)
+    else:
+        tarkistuslista.append(False)
+    
+    if pvkk_tarkistin(kk, pv, syntymavuosi):
+        tarkistuslista.append(True)
+    else:
+        tarkistuslista.append(False)
+
+    if tarkistusmerkki(hetu):
+        tarkistuslista.append(True)
+    else:
+        tarkistuslista.append(False)
+
+    
+    if False in tarkistuslista:
+        return False
+    else:
+        return True
+
+#----------------------------------------
+
+def pituus(hetu: str):
+    if len(hetu) == 11:
+        return True
+
+#----------------------------------------
+
+def tarkistusmerkki(hetu: str):
+    merkkilista = "0123456789ABCDEFHJKLMNPRSTUVWXY"
+    numerosarja = (hetu[0:6])+(hetu[7:10])
+    tarkmerkki = merkkilista[int(numerosarja) % 31]
+    
+    if tarkmerkki == hetu[10]:
+        return True
+
+#----------------------------------------
+
+def pvkk_tarkistin(kk: int, pv: int, v: int):
+
+    if (kk == 1 or kk == 3 or kk == 5 or kk == 7 or kk == 8 or kk == 10 or kk == 12) and (pv > 0 and pv <= 31):
+        return True
+    
+    if onko_karkausvuosi(v):
+        if kk == 2 and (pv > 0 and pv <= 29):
+            return True
+
+    if kk == 2 and (pv > 0 and pv <= 28):
+        return True
+    
+    if kk == 4 or kk == 6 or kk == 9 or kk == 11 and (pv > 0 and pv <= 30):
+        return True
+
+#----------------------------------------
+
+def vuosiluku(vuosi: int, merkki: str):
+
+    if merkki == "+":
+        vuosi = 1800 + (int(vuosi))
+ 
+    if merkki == "-":
+        vuosi = 1900 + (int(vuosi))
+    
+    if merkki == "A":
+        vuosi = 2000 + (int(vuosi))
+    
+    return vuosi
+    
+    if vuosi >= 1800 and vuosi <= 2999:
+        return True
+
+#----------------------------------------
+
+def onko_karkausvuosi(vuosi: int):
+
+    if vuosi % 4 == 0 and vuosi % 100 != 0:
+        return True
+
+    elif vuosi % 100 == 0 and vuosi % 400 == 0:
+        return True
+
+    else:
+        return False
+
+#----------------------------------------
+
+def merkkitarkistin(merkki: str):
+    if merkki == "+" or merkki == "-" or merkki == "A":
+        return True
+
+#----------------------------------------
+
+if __name__ == "__main__":
+    print(onko_validi("230827-906F"))
+    print(onko_validi("120488+246L0"))
+    print(onko_validi("310823A98770"))
