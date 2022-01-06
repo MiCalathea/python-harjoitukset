@@ -1,5 +1,3 @@
-import datetime
-
 def onko_validi(hetu: str):
 
     pv = int(hetu[0:2]) #01
